@@ -1,12 +1,12 @@
 # auto-vanguard
-tera-proxy module to automatically turn in Vanguard Initiative quests upon completion
+tera-proxy module to automatically turn in Vanguard Initiative requests upon completion
 
 ## Dependency
 - `command` module
 - `tera-game-state` module
 
 ## Usage
-- __`vanguard` · `vg` · `ㅍㅎ`__
+- __`vanguard` · `vg`__
   - Toggle on/off
 
 ## Config
@@ -18,16 +18,16 @@ tera-proxy module to automatically turn in Vanguard Initiative quests upon compl
   - Default is archer : `5`
   - Classes are numerically specified by :
 ```
-        0 : Warrior
-        1 : Lancer
-        2 : Slayer
-        3 : Berserker
-        4 : Sorcerer
-        5 : Archer
-        6 : Priest
-        7 : Mystic
-        8 : Reaper
-        9 : Gunner
+        0 :  Warrior
+        1 :  Lancer
+        2 :  Slayer
+        3 :  Berserker
+        4 :  Sorcerer
+        5 :  Archer
+        6 :  Priest
+        7 :  Mystic
+        8 :  Reaper
+        9 :  Gunner
         10 : Brawler
         11 : Ninja
         12 : Valkyrie
@@ -43,6 +43,11 @@ tera-proxy module to automatically turn in Vanguard Initiative quests upon compl
 ## Changelog
 <details>
 
+    1.40
+    - Removed `command` require()
+    - Removed `tera-game-state` require()
+    - Updated to `mod.command`
+    - Updated to `mod.game`
     1.39
     - Removed font color bloat
     - Added `tera-game-state` dependency
