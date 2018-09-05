@@ -1,4 +1,4 @@
-// Version 1.40 r:00
+// Version 1.40 r:01
 
 const config = require('./config.json');
 
@@ -23,7 +23,7 @@ module.exports = function AutoVanguard(m) {
 	// disable module for specified job/class in config
 	// useful for when accumulating item xp on alternative gear
 	// if jobDisable is on, toggle according to configured class
-	m.game.on('enter_game', () => {
+	m.game.me.on('enter_game', () => {
 		let prevState = enable;
 		if (!config.jobDisable) return
 		(((m.game.me.templateId - 10101) % 100) !== config.job) ? enable = prevState : enable = false
@@ -31,7 +31,7 @@ module.exports = function AutoVanguard(m) {
 
 	// if in battleground, hold completion until open world
 	// else check if there is a quest to complete
-	m.game.on('change_zone', () => {
+	m.game.me.on('change_zone', () => {
 		if (m.game.me.inBattleground) { hold = true; }
 		else if (hold && questId !== 0) { completeQuest(); hold = false; }
 	});
