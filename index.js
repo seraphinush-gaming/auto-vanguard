@@ -1,4 +1,4 @@
-// Version 1.40 r:01
+// Version 1.40 r:02
 
 const config = require('./config.json');
 
@@ -23,7 +23,7 @@ module.exports = function AutoVanguard(m) {
 	// disable module for specified job/class in config
 	// useful for when accumulating item xp on alternative gear
 	// if jobDisable is on, toggle according to configured class
-	m.game.me.on('enter_game', () => {
+	m.game.on('enter_game', () => {
 		let prevState = enable;
 		if (!config.jobDisable) return
 		(((m.game.me.templateId - 10101) % 100) !== config.job) ? enable = prevState : enable = false
