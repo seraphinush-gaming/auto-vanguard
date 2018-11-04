@@ -1,40 +1,27 @@
 # auto-vanguard
 tera-proxy module to automatically turn in Vanguard Initiative requests upon completion
 
+## Auto-update guide
+- Create a folder called `auto-vanguard` in `tera-proxy/bin/node_modules` and download [`module.json`](https://raw.githubusercontent.com/seraphinush-gaming/auto-vanguard/master/module.json) (right-click save link as...) into the folder
+
 ## Dependency
 - `command` module
 - `tera-game-state` module
 
 ## Usage
-- __`vanguard` · `vg`__
+- __`vg`__
   - Toggle on/off
+
+### Parameters
+- __`add`__
+  - Add player to character-specific exclusion from auto-vangaurd completion
+- __`rm`__
+  - Remove player from character-specific exclusion from auto-vanguard completion
 
 ## Config
 - __`enable`__
   - Initialize module on/off
   - Default is `true`
-- __`job`__
-  - Specify class to automatically turn module off
-  - Default is archer : `5`
-  - Classes are numerically specified by :
-```
-        0 :  Warrior
-        1 :  Lancer
-        2 :  Slayer
-        3 :  Berserker
-        4 :  Sorcerer
-        5 :  Archer
-        6 :  Priest
-        7 :  Mystic
-        8 :  Reaper
-        9 :  Gunner
-        10 : Brawler
-        11 : Ninja
-        12 : Valkyrie
-```
-- __`jobDisable`__
-  - Automatically turn module on/off for specified class denoted at `job`
-  - Default is `false`
 
 ## Info
 - Original author : [baldera-mods](https://github.com/baldera-mods)
@@ -43,6 +30,11 @@ tera-proxy module to automatically turn in Vanguard Initiative requests upon com
 ## Changelog
 <details>
 
+    2.00
+    - Removed `jobDisable` from config
+    - Removed `job` from config
+    - Added `add` parameter
+    - Added `rm` parameter
     1.40
     - Removed `command` require()
     - Removed `tera-game-state` require()

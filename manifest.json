@@ -1,9 +1,12 @@
 {
 	"files": {
-		"config.json": { "overwrite": false, "hash": "e884157e68aeb4462218496bc049a649b4d406b67d3a4a8945aab25dc489431f" },
-		"index.js": "9c354fa70a946bd249bf4eea34a1f82ca405b48589c84222f2c14ab4465693c3",
-		"module.json": "c9480b019bc4a319cdbd8474a10c93e463e3af8a3595ffd9bde058404158bc63",
-		"README.md": "5331fb3d87e00c577e1015c08f7ba4f0f4e47afa7154594555605468cadd8251"
+		"README.md": "885aadad5a6fce4ba21549a7ab3eb1912e88db99dbc540e0b80c3bd2525b55a4",
+		"config.json": {
+			"overwrite": false,
+			"hash": "9816694f5892b284e90a0d7189391aa561e647538a7570061a6f668255fdb931"
+		},
+		"index.js": "09453d13d431b60e846f7dbafce8e0dcedf57a8452e5b946457baec78c5fa82f",
+		"module.json": "5be34f3cd881e1dad15ccb14d56778f2b0ec098f1a0bfb32c66d126b937f33e0"
 	},
 	"defs": {
 		"C_COMPLETE_DAILY_EVENT": 1,

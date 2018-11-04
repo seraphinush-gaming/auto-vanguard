@@ -1,63 +1,101 @@
-// Version 1.40 r:02
+// Version 2.00 r:00
+'use strict';
+
+const fs = require('fs');
+const path = require('path');
 
 const config = require('./config.json');
 
 module.exports = function AutoVanguard(m) {
+    const cmd = m.command || m.require.command;
 
-	// config
-	let	enable = config.enable;
+    let data = config;
 
-	let hold = false,
-		questId = 0;
+    // config
+    let enable = data.enable,
+        playerExclusion = data.playerExclusion;
 
-	// command
-	// toggle
-	m.command.add(['vanguard', 'vg'], {
-		$none() {
-			enable = !enable;
-			send(`${enable ? 'Enabled' : 'Disabled'}`);
-		}
-	});
+    let hold = false,
+        playerName = '',
+        prevState = enable,
+        questId = [];
 
-	// mod.game
-	// disable module for specified job/class in config
-	// useful for when accumulating item xp on alternative gear
-	// if jobDisable is on, toggle according to configured class
-	m.game.on('enter_game', () => {
-		let prevState = enable;
-		if (!config.jobDisable) return
-		(((m.game.me.templateId - 10101) % 100) !== config.job) ? enable = prevState : enable = false
-	});
+    // command
+    cmd.add('vg', {
+        $none() {
+            enable = !enable;
+            prevState = enable;
+            send(`${enable ? 'En' : 'Dis'}abled`);
+        },
+        add() {
+            playerExclusion.push(playerName);
+            data.playerExclusion = playerExclusion;
+            saveJsonData();
+            enable = false;
+            send(`Added player "${playerName}" to be excluded from auto-vanguard completion.`);
+        },
+        rm() {
+            for(let i = 0, n = playerExclusion.length; i < n; i++) {
+                if (playerExclusion[i] === playerName) {
+                    playerExclusion.splice(i, 1);
+                    data.playerExclusion = playerExclusion;
+                    saveJsonData();
+                    enable = true;
+                    send(`Removed player "${playerName}" to be included in auto-vanguard completion.`);
+                    return;
+                }
+            }
+            send(`Player ${playerName} has not been excluded from auto-vanguard completion yet.`);
+        },
+        $default() { send(`Invalid argument. usage : vg [add|rm]`); }
+    });
 
-	// if in battleground, hold completion until open world
-	// else check if there is a quest to complete
-	m.game.me.on('change_zone', () => {
+    // mod.game
+    m.game.on('enter_game', () => {
+        playerName = m.game.me.name;
+        if (!enable) return
+        prevState = enable;
+        for (let i = 0, n = playerExclusion.length; i < n; i++) {
+            if (playerExclusion[i] === playerName) {
+                enable = false;
+                break;
+            }
+        }
+    });
+
+    m.game.me.on('change_zone', () => {
 		if (m.game.me.inBattleground) { hold = true; }
-		else if (hold && questId !== 0) { completeQuest(); hold = false; }
-	});
+		else if (hold && questId.length !== 0) { completeQuest(); hold = false; }
+    });
+    
+    m.game.on('leave_game', () => {
+        enable = prevState;
+        questId.length = 0;
+    });
 
-	// code
-	// if not in battleground, complete vanguard quest
-	// otherwise, hold questId for later completion
-	m.hook('S_COMPLETE_EVENT_MATCHING_QUEST', 1, (e) => {
+    // code
+    m.hook('S_COMPLETE_EVENT_MATCHING_QUEST', 1, (e) => {
 		if (!enable) return
-		questId = e.id;
+		questId.push(e.id);
 		if (!hold) completeQuest();
 		return false
-	});
-
-	//helper
-	// rudimentary attempt to complete both extra events
-	// technically, sends at least 1 unnecessary packet every vanguard completion
-	function completeQuest() {
-		m.send('C_COMPLETE_DAILY_EVENT', 1, { id: questId });
-		try {
-			setTimeout(() => { m.send('C_COMPLETE_EXTRA_EVENT', 1, { type: 0 }); }, 500);
-			setTimeout(() => { m.send('C_COMPLETE_EXTRA_EVENT', 1, { type: 1 }); }, 500);
-		} catch (e) {
-			// do nothing
-		}
-		questId = 0;
+    });
+    
+    // helper
+    function completeQuest() {
+        for (let i = 0, n = questId.length; i < n; i++) {
+            m.send('C_COMPLETE_DAILY_EVENT', 1, { id: questId[i] });
+            try {
+                setTimeout(() => { m.send('C_COMPLETE_EXTRA_EVENT', 1, { type: 0 }); }, 500);
+                setTimeout(() => { m.send('C_COMPLETE_EXTRA_EVENT', 1, { type: 1 }); }, 500);
+            } catch (e) {
+                // do nothing
+            }
+        }
+    }
+    
+    function saveJsonData() {
+		fs.writeFileSync(path.join(__dirname, './config.json'), JSON.stringify(data));
 	}
 
 	function send(msg) { m.command.message(`: ` + msg); }
