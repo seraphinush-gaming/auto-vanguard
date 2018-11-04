@@ -1,4 +1,4 @@
-// Version 2.00 r:01
+// Version 2.00 r:02
 'use strict';
 
 const fs = require('fs');
@@ -16,17 +16,17 @@ module.exports = function AutoVanguard(m) {
         playerExclusion = data.playerExclusion;
 
     // to remove at next update	
-	const default_config = {	
-		"enable": true,	
-		"playerExclusion": []
-	}
-	if (!data.playerExclusion) {	
-		data = default_config;	
-		saveJsonData();	
-		console.log(`[auto-vanguard] : Updated config as necessary.`);	
-		console.log(`[auto-vanguard] : Specific characters can now be excluded from vanguard completion via : 'vg add'.`);	
-		console.log(`[auto-vanguard] : Specific characters can be removed from the exclusion via : 'vg rm'.`);
-	}	
+    const default_config = {
+        "enable": true,
+        "playerExclusion": []
+    }
+    if (!data.playerExclusion) {
+        data = default_config;
+        saveJsonData();
+        console.log(`[auto-vanguard] : Updated config as necessary.`);
+        console.log(`[auto-vanguard] : Specific characters can now be excluded from vanguard completion via : 'vg add'.`);
+        console.log(`[auto-vanguard] : Specific characters can be removed from the exclusion via : 'vg rm'.`);
+    }
     //
 
     let hold = false,
@@ -49,7 +49,7 @@ module.exports = function AutoVanguard(m) {
             send(`Added player "${playerName}" to be excluded from auto-vanguard completion.`);
         },
         rm() {
-            for(let i = 0, n = playerExclusion.length; i < n; i++) {
+            for (let i = 0, n = playerExclusion.length; i < n; i++) {
                 if (playerExclusion[i] === playerName) {
                     playerExclusion.splice(i, 1);
                     data.playerExclusion = playerExclusion;
@@ -78,10 +78,10 @@ module.exports = function AutoVanguard(m) {
     });
 
     m.game.me.on('change_zone', () => {
-		if (m.game.me.inBattleground) { hold = true; }
-		else if (hold && questId.length !== 0) { completeQuest(); hold = false; }
+        if (m.game.me.inBattleground) { hold = true; }
+        else if (hold && questId.length !== 0) { completeQuest(); hold = false; }
     });
-    
+
     m.game.on('leave_game', () => {
         enable = prevState;
         questId.length = 0;
@@ -89,12 +89,12 @@ module.exports = function AutoVanguard(m) {
 
     // code
     m.hook('S_COMPLETE_EVENT_MATCHING_QUEST', 1, (e) => {
-		if (!enable) return
-		questId.push(e.id);
-		if (!hold) completeQuest();
-		return false
+        if (!enable) return
+        questId.push(e.id);
+        if (!hold) completeQuest();
+        return false
     });
-    
+
     // helper
     function completeQuest() {
         for (let i = 0, n = questId.length; i < n; i++) {
@@ -107,11 +107,11 @@ module.exports = function AutoVanguard(m) {
             }
         }
     }
-    
-    function saveJsonData() {
-		fs.writeFileSync(path.join(__dirname, './config.json'), JSON.stringify(data));
-	}
 
-	function send(msg) { m.command.message(`: ` + msg); }
+    function saveJsonData() {
+        fs.writeFileSync(path.join(__dirname, './config.json'), JSON.stringify(data));
+    }
+
+    function send(msg) { m.command.message(`: ` + msg); }
 
 }
