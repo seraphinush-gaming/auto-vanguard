@@ -1,4 +1,4 @@
-// Version 2.00 r:00
+// Version 2.00 r:01
 'use strict';
 
 const fs = require('fs');
@@ -14,6 +14,20 @@ module.exports = function AutoVanguard(m) {
     // config
     let enable = data.enable,
         playerExclusion = data.playerExclusion;
+
+    // to remove at next update	
+	const default_config = {	
+		"enable": true,	
+		"playerExclusion": []
+	}
+	if (!data.playerExclusion) {	
+		data = default_config;	
+		saveJsonData();	
+		console.log(`[auto-vanguard] : Updated config as necessary.`);	
+		console.log(`[auto-vanguard] : Specific characters can now be excluded from vanguard completion via : 'vg add'.`);	
+		console.log(`[auto-vanguard] : Specific characters can be removed from the exclusion via : 'vg rm'.`);
+	}	
+    //
 
     let hold = false,
         playerName = '',
@@ -53,7 +67,7 @@ module.exports = function AutoVanguard(m) {
     // mod.game
     m.game.on('enter_game', () => {
         playerName = m.game.me.name;
-        if (!enable) return
+        if (!enable) return;
         prevState = enable;
         for (let i = 0, n = playerExclusion.length; i < n; i++) {
             if (playerExclusion[i] === playerName) {
