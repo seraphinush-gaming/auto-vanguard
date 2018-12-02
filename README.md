@@ -2,7 +2,7 @@
 tera-proxy module to automatically turn in Vanguard Initiative requests upon completion
 
 ## Auto-update guide
-- Create a folder called `auto-vanguard` in `tera-proxy/bin/node_modules` and download [`module.json`](https://raw.githubusercontent.com/seraphinush-gaming/auto-vanguard/master/module.json) (right-click save link as...) into the folder
+- Create a folder called `auto-vanguard` in `tera-proxy/bin/node_modules` and download >> [`module.json`](https://raw.githubusercontent.com/seraphinush-gaming/auto-vanguard/master/module.json) << (right-click save link as...) into the folder
 
 ## Dependency
 - `command` module
