@@ -1,5 +1,8 @@
 {
     "disableAutoUpdate": false,
-    "options": { "niceName": "auto-vanguard" },
+    "name": "auto-vanguard",
+    "author": "seraphinush",
+    "description": "tera-proxy module to automatically turn in Vanguard Requests upon completion",
+    "version": "2.01.00",
     "servers": ["https://raw.githubusercontent.com/seraphinush-gaming/auto-vanguard/master/"]
 }

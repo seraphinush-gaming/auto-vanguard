@@ -1,4 +1,3 @@
-// Version 2.00 r:03
 'use strict';
 
 const fs = require('fs');
@@ -64,8 +63,13 @@ module.exports = function AutoVanguard(mod) {
     });
 
     mod.game.me.on('change_zone', () => {
-        if (mod.game.me.inBattleground) { hold = true; }
-        else if (hold && questId.length !== 0) { completeQuest(); hold = false; }
+        if (mod.game.me.inBattleground) {
+            hold = true;
+        }
+        else if (hold && questId.length !== 0) {
+            completeQuest();
+            hold = false;
+        }
     });
 
     mod.game.on('leave_game', () => {
@@ -86,12 +90,8 @@ module.exports = function AutoVanguard(mod) {
     function completeQuest() {
         for (let i = 0, n = questId.length; i < n; i++) {
             mod.send('C_COMPLETE_DAILY_EVENT', 1, { id: questId[i] });
-            try {
-                setTimeout(() => { mod.send('C_COMPLETE_EXTRA_EVENT', 1, { type: 0 }); }, 500);
-                setTimeout(() => { mod.send('C_COMPLETE_EXTRA_EVENT', 1, { type: 1 }); }, 500);
-            } catch (e) {
-                // do nothing
-            }
+            setTimeout(() => { mod.send('C_COMPLETE_EXTRA_EVENT', 1, { type: 0 }); }, 500);
+            setTimeout(() => { mod.send('C_COMPLETE_EXTRA_EVENT', 1, { type: 1 }); }, 500);
         }
     }
 
@@ -99,6 +99,6 @@ module.exports = function AutoVanguard(mod) {
         fs.writeFileSync(path.join(__dirname, 'config.json'), JSON.stringify(data));
     }
 
-    function send(msg) { cmd.message(`: ` + msg); }
+    function send(msg) { cmd.message(': ' + msg); }
 
 }
