@@ -29,7 +29,6 @@ tera-proxy module to automatically turn in Vanguard Requests upon completion
 
 ## Info
 - Original author : [baldera-mods](https://github.com/baldera-mods)
-- **Support seraph via paypal donations, thanks in advance : [paypal](https://www.paypal.me/seraphinush)**
 
 ## Changelog
 <details>
