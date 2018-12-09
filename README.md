@@ -34,6 +34,8 @@ tera-proxy module to automatically turn in Vanguard Requests upon completion
 ## Changelog
 <details>
 
+    2.01
+    - Updated for caali-proxy-nextgen
     2.00
     - Removed `jobDisable` from config
     - Removed `job` from config
