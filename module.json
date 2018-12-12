@@ -1,13 +1,11 @@
 {
     "disableAutoUpdate": false,
     "name": "auto-vanguard",
-    "author": "seraphinush",
+    "author": "seraphinush | baldera-mods",
     "description": "tera-proxy module to automatically turn in Vanguard Requests upon completion",
-    "version": "2.01.01",
-    "conflicts": [
-        "vanguardian"
-    ],
-    "servers": [
-        "https://raw.githubusercontent.com/seraphinush-gaming/auto-vanguard/master/"
-    ]
+    "version": "2.01.02",
+    "conflicts": ["vanguardian"],
+    "servers": ["https://raw.githubusercontent.com/seraphinush-gaming/auto-vanguard/master/"],
+    "supportUrl": "https://github.com/seraphinush-gaming/auto-vanguard/blob/master/README.md",
+    "donationUrl": "https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=B7QQJZV9L5P2J&source=url"
 }

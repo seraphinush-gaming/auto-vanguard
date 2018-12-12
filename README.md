@@ -1,16 +1,11 @@
-> [![paypal](https://img.shields.io/badge/paypal-donate-333333.svg?colorA=253B80&colorB=333333)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=B7QQJZV9L5P2J&source=url) [![paypal.me](https://img.shields.io/badge/paypal.me-donate-333333.svg?colorA=169BD7&colorB=333333)](https://www.paypal.me/seraphinush) 
->
-> Support seraph via paypal donations, thanks in advance !
-
-# auto-vanguard
+# auto-vanguard [![paypal](https://img.shields.io/badge/paypal-donate-333333.svg?colorA=253B80&colorB=333333)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=B7QQJZV9L5P2J&source=url) [![paypal.me](https://img.shields.io/badge/paypal.me-donate-333333.svg?colorA=169BD7&colorB=333333)](https://www.paypal.me/seraphinush)
 tera-proxy module to automatically turn in Vanguard Requests upon completion
+```
+Support seraph via paypal donations, thanks in advance !
+```
 
 ## Auto-update guide
 - Create a folder called `auto-vanguard` in `tera-proxy/mods` and download >> [`module.json`](https://raw.githubusercontent.com/seraphinush-gaming/auto-vanguard/master/module.json) << (right-click this link and save as..) into the folder
-
-## Dependency
-- `command` module
-- `tera-game-state` module
 
 ## Usage
 - __`vg`__
