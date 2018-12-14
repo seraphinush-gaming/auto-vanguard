@@ -5,8 +5,8 @@
 			"overwrite": false,
 			"hash": "9816694f5892b284e90a0d7189391aa561e647538a7570061a6f668255fdb931"
 		},
-		"index.js": "8edd32e8fb5ad2a4b14f09caedf5279b0b7916183ac3741291f21db3b78611f9",
-		"module.json": "e74a5e12906fd218d5c986430904f454779e8df4a5e2cb8c6ebced48288c175a"
+		"index.js": "8b616810b28b3dc446dbe0d8fbe51d38eefbde057c87adc554d08a35712bd5d5",
+		"module.json": "dbf315bd192f5617e1c61a446f3716e042bd7b806caaddc4a55f069384b5d740"
 	},
 	"defs": {
 		"C_COMPLETE_DAILY_EVENT": 1,

@@ -30,7 +30,7 @@ module.exports = function AutoVanguard(mod) {
             data.playerExclusion = playerExclusion;
             saveJsonData();
             enable = false;
-            send(`Added player "${playerName}" to be excluded from auto-vanguard completion.`);
+            send(`Added player &lt;${playerName}&gt; to be excluded from auto-vanguard completion.`);
         },
         'rm': () => {
             for (let i = 0, n = playerExclusion.length; i < n; i++) {
@@ -39,11 +39,11 @@ module.exports = function AutoVanguard(mod) {
                     data.playerExclusion = playerExclusion;
                     saveJsonData();
                     enable = true;
-                    send(`Removed player "${playerName}" to be included in auto-vanguard completion.`);
+                    send(`Removed player &lt;${playerName}&gt; to be included in auto-vanguard completion.`);
                     return;
                 }
             }
-            send(`Player "${playerName}" has not been excluded from auto-vanguard completion yet.`);
+            send(`Player &lt;${playerName}&gt; has not been excluded from auto-vanguard completion yet.`);
         },
         '$default': () => { send(`Invalid argument. usage : vg [add|rm]`); }
     });

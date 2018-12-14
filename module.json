@@ -3,7 +3,7 @@
     "name": "auto-vanguard",
     "author": "seraphinush | baldera-mods",
     "description": "tera-proxy module to automatically turn in Vanguard Requests upon completion",
-    "version": "2.01.02",
+    "version": "2.01.03",
     "conflicts": ["vanguardian"],
     "servers": ["https://raw.githubusercontent.com/seraphinush-gaming/auto-vanguard/master/"],
     "supportUrl": "https://github.com/seraphinush-gaming/auto-vanguard/blob/master/README.md",
