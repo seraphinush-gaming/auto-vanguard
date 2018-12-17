@@ -45,7 +45,7 @@ module.exports = function AutoVanguard(mod) {
             }
             send(`Player &lt;${playerName}&gt; has not been excluded from auto-vanguard completion yet.`);
         },
-        '$default': () => { send(`Invalid argument. usage : vg [add|rm]`); }
+        '$default': () => send(`Invalid argument. usage : vg [add|rm]`)
     });
 
     // mod.game
@@ -100,5 +100,26 @@ module.exports = function AutoVanguard(mod) {
     }
 
     function send(msg) { cmd.message(': ' + msg); }
+
+    // reload
+    this.saveState = () => {
+        let state = {
+            enable: enable,
+            hold: hold,
+            prevState: prevState,
+            questId: questId
+        };
+        return state;
+    }
+
+    this.loadState = (state) => {
+        enable = state.enable;
+        hold = state.hold;
+        playerName = mod.game.me.name;
+        prevState = state.prevState
+        questId = state.questId;
+    }
+
+    this.destructor = () => { cmd.remove('vg'); }
 
 }

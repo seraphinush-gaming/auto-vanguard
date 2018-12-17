@@ -1,12 +1,12 @@
 {
 	"files": {
-		"README.md": "82df7a93384bdfdfe36f779b15f095073fe661f189cbc01cf2f849525d7c7154",
+		"README.md": "3a1acef134383008115a5bd314ccae251fbf00c1a462eeb9a07002166f7a8215",
 		"config.json": {
 			"overwrite": false,
 			"hash": "9816694f5892b284e90a0d7189391aa561e647538a7570061a6f668255fdb931"
 		},
-		"index.js": "8b616810b28b3dc446dbe0d8fbe51d38eefbde057c87adc554d08a35712bd5d5",
-		"module.json": "dbf315bd192f5617e1c61a446f3716e042bd7b806caaddc4a55f069384b5d740"
+		"index.js": "1a019cbf8468581b1742baf314471ec1734468499a413cc58882c887b459c5cf",
+		"module.json": "617531a101a365698903d9a82c8210663bcebcafc28f6ad91822e3ea54715656"
 	},
 	"defs": {
 		"C_COMPLETE_DAILY_EVENT": 1,

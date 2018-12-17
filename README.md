@@ -28,6 +28,8 @@ Support seraph via paypal donations, thanks in advance !
 ## Changelog
 <details>
 
+    2.02
+    - Added hot-reload support
     2.01
     - Updated for caali-proxy-nextgen
     2.00
