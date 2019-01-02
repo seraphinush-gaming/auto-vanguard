@@ -3,10 +3,11 @@
 		"README.md": "3a1acef134383008115a5bd314ccae251fbf00c1a462eeb9a07002166f7a8215",
 		"config.json": {
 			"overwrite": false,
-			"hash": "9816694f5892b284e90a0d7189391aa561e647538a7570061a6f668255fdb931"
+			"hash": "11e7ca8722b88776ccfed5d2c1afdd6cdc320d9a3f217ee571976e359262fa63"
 		},
-		"index.js": "1a019cbf8468581b1742baf314471ec1734468499a413cc58882c887b459c5cf",
-		"module.json": "617531a101a365698903d9a82c8210663bcebcafc28f6ad91822e3ea54715656"
+		"data.json": "68f2f004b3b3d4f49aba44868e1c810ff7e5bacd6ea887c7400d9e81176a8b92",
+		"index.js": "ab8d171352aac2f8884953ebe87db193a5be5cd442a8719ebd40e3d871eb03b2",
+		"module.json": "8bc61a4ef20d942238ba201df8373be79a6b6db03f320cd54ec1687d4f386c19"
 	},
 	"defs": {
 		"C_COMPLETE_DAILY_EVENT": 1,

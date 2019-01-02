@@ -9,8 +9,8 @@ module.exports = function AutoVanguard(mod) {
     const cmd = mod.command || mod.require.command;
 
     // config
-    let data = config,
-        enable = data.enable,
+    let data = require('./data.json'),
+        enable = config.enable,
         playerExclusion = data.playerExclusion;
 
     let hold = false,
@@ -88,15 +88,16 @@ module.exports = function AutoVanguard(mod) {
 
     // helper
     function completeQuest() {
-        for (let i = 0, n = questId.length; i < n; i++) {
-            mod.send('C_COMPLETE_DAILY_EVENT', 1, { id: questId[i] });
-            setTimeout(() => { mod.send('C_COMPLETE_EXTRA_EVENT', 1, { type: 0 }); }, 500);
-            setTimeout(() => { mod.send('C_COMPLETE_EXTRA_EVENT', 1, { type: 1 }); }, 500);
+        while (questId.length > 0) {
+            let myId = questId.pop();
+            mod.send('C_COMPLETE_DAILY_EVENT', 1, { id: myId });
         }
+        setTimeout(() => { mod.send('C_COMPLETE_EXTRA_EVENT', 1, { type: 0 }); }, 500);
+        setTimeout(() => { mod.send('C_COMPLETE_EXTRA_EVENT', 1, { type: 1 }); }, 500);
     }
 
     function saveJsonData() {
-        fs.writeFileSync(path.join(__dirname, 'config.json'), JSON.stringify(data));
+        fs.writeFileSync(path.join(__dirname, 'data.json'), JSON.stringify(data));
     }
 
     function send(msg) { cmd.message(': ' + msg); }
