@@ -16,7 +16,7 @@ module.exports = function AutoVanguard(mod) {
     let hold = false,
         playerName = '',
         prevState = enable,
-        questId = [];
+        questId = [],
         zoneBg = 0;
 
     // command
