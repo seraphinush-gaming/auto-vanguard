@@ -17,6 +17,7 @@ module.exports = function AutoVanguard(mod) {
         playerName = '',
         prevState = enable,
         questId = [];
+        zoneBg = 0;
 
     // command
     cmd.add('vg', {
@@ -48,9 +49,9 @@ module.exports = function AutoVanguard(mod) {
         '$default': () => send(`Invalid argument. usage : vg [add|rm]`)
     });
 
-    // mod.game
-    mod.game.on('enter_game', () => {
-        playerName = mod.game.me.name;
+    // game state
+    mod.hook('S_LOGIN', 12, (e) => {
+        playerName = e.name;
         if (!enable)
             return;
         prevState = enable;
@@ -62,17 +63,18 @@ module.exports = function AutoVanguard(mod) {
         }
     });
 
-    mod.game.me.on('change_zone', () => {
-        if (mod.game.me.inBattleground) {
+    mod.hook('S_LOAD_TOPO', 3, (e) => {
+        if (e.zone = zoneBg)
             hold = true;
-        }
         else if (hold && questId.length !== 0) {
             completeQuest();
             hold = false;
         }
     });
 
-    mod.game.on('leave_game', () => {
+    mod.hook('S_BATTLE_FIELD_ENTRANCE_INFO', 1, (e) => zoneBg = e.zone);
+
+    mod.tryHook('S_EXIT', 'raw', () => {
         enable = prevState;
         questId.length = 0;
     });
@@ -82,7 +84,8 @@ module.exports = function AutoVanguard(mod) {
         if (!enable)
             return;
         questId.push(e.id);
-        if (!hold) completeQuest();
+        if (!hold)
+            completeQuest();
         return false;
     });
 
@@ -107,6 +110,7 @@ module.exports = function AutoVanguard(mod) {
         let state = {
             enable: enable,
             hold: hold,
+            playerName: playerName,
             prevState: prevState,
             questId: questId
         };
@@ -116,7 +120,7 @@ module.exports = function AutoVanguard(mod) {
     this.loadState = (state) => {
         enable = state.enable;
         hold = state.hold;
-        playerName = mod.game.me.name;
+        playerName = state.playerName;
         prevState = state.prevState
         questId = state.questId;
     }

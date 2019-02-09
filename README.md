@@ -5,7 +5,7 @@ Support seraph via paypal donations, thanks in advance !
 ```
 
 ## Auto-update guide
-- Create a folder called `auto-vanguard` in `tera-proxy/mods` and download >> [`module.json`](https://raw.githubusercontent.com/seraphinush-gaming/auto-vanguard/master/module.json) << (right-click this link and save as..) into the folder
+- Create a folder called `auto-vanguard` in `tera-proxy/mods` and download >> [`module.json`](https://raw.githubusercontent.com/seraphinush-gaming/auto-vanguard/master/module.json) << (right-click this link and save link as..) into the folder
 
 ## Usage
 - __`vg`__
@@ -28,6 +28,8 @@ Support seraph via paypal donations, thanks in advance !
 ## Changelog
 <details>
 
+    2.03
+    - Removed `tera-game-state` usage
     2.02
     - Added hot-reload support
     2.01
@@ -38,7 +40,7 @@ Support seraph via paypal donations, thanks in advance !
     - Added `add` parameter
     - Added `rm` parameter
     1.40
-    - Removed `command` require()
+    - Removed `Command` require()
     - Removed `tera-game-state` require()
     - Updated to `mod.command`
     - Updated to `mod.game`

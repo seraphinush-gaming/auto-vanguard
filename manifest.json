@@ -1,17 +1,21 @@
 {
 	"files": {
-		"README.md": "3a1acef134383008115a5bd314ccae251fbf00c1a462eeb9a07002166f7a8215",
+		"README.md": "509b5655ed027585b23a6fd988ae329f0365b33828992ea6db357096cc4af599",
 		"config.json": {
 			"overwrite": false,
 			"hash": "11e7ca8722b88776ccfed5d2c1afdd6cdc320d9a3f217ee571976e359262fa63"
 		},
 		"data.json": "68f2f004b3b3d4f49aba44868e1c810ff7e5bacd6ea887c7400d9e81176a8b92",
-		"index.js": "ab8d171352aac2f8884953ebe87db193a5be5cd442a8719ebd40e3d871eb03b2",
-		"module.json": "cb8de622cc3a3f9a951fd876285a5c8a252085ee9c4e90ec67594af7c25372a2"
+		"index.js": "61fee7a7103d4f5188e3c733e2ce2849865747cdf183705e8e06e152c6f2786e",
+		"module.json": "02d63d6dc08831c9f228c061b28d5b08607529d1665489845ecfc1e164529a32"
 	},
 	"defs": {
 		"C_COMPLETE_DAILY_EVENT": 1,
 		"C_COMPLETE_EXTRA_EVENT": 1,
-		"S_COMPLETE_EVENT_MATCHING_QUEST": 1
+		"S_BATTLE_FIELD_ENTRANCE_INFO": 1,
+		"S_COMPLETE_EVENT_MATCHING_QUEST": 1,
+		"S_EXIT": "raw",
+		"S_LOAD_TOPO": 3,
+		"S_LOGIN": 12
 	}
 }
