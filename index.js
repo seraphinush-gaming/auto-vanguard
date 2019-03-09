@@ -1,12 +1,12 @@
 'use strict';
 
-const fs = require('fs');
-const path = require('path');
+const fs = require('fs'),
+      path = require('path'),
 
-const config = require('./config.json');
+      config = require('./config.json');
 
 module.exports = function AutoVanguard(mod) {
-    const cmd = mod.command || mod.require.command;
+    const cmd = mod.command;
 
     // config
     let data = require('./data.json'),
@@ -17,7 +17,7 @@ module.exports = function AutoVanguard(mod) {
         playerName = '',
         prevState = enable,
         questId = [],
-        zoneBg = 0;
+        zoneBg = [];
 
     // command
     cmd.add('vg', {
@@ -64,15 +64,19 @@ module.exports = function AutoVanguard(mod) {
     });
 
     mod.hook('S_LOAD_TOPO', 3, (e) => {
-        if (e.zone == zoneBg)
+        if (zoneBg.includes(e)) {
             hold = true;
-        else if (hold && questId.length !== 0) {
+        } else if (hold && questId.length !== 0) {
             completeQuest();
             hold = false;
         }
     });
 
-    mod.hook('S_BATTLE_FIELD_ENTRANCE_INFO', 1, (e) => zoneBg = e.zone);
+    let _ = mod.tryHook('S_BATTLE_FIELD_ENTRANCE_INFO', 1, { order: -1000 }, (e) => zoneBg = [e.zone]);
+    if (_ === null) {
+        zoneBg = data.battleground;
+        console.log('Unmapped protocol packet \<S_BATTLE_FIELD_ENTRANCE_INFO\>.');
+    }
 
     mod.tryHook('S_EXIT', 'raw', () => {
         enable = prevState;
@@ -95,12 +99,12 @@ module.exports = function AutoVanguard(mod) {
             let myId = questId.pop();
             mod.send('C_COMPLETE_DAILY_EVENT', 1, { id: myId });
         }
-        setTimeout(() => { mod.send('C_COMPLETE_EXTRA_EVENT', 1, { type: 0 }); }, 500);
-        setTimeout(() => { mod.send('C_COMPLETE_EXTRA_EVENT', 1, { type: 1 }); }, 500);
+        setTimeout(() => { mod.trySend('C_COMPLETE_EXTRA_EVENT', 1, { type: 0 }); }, 500);
+        setTimeout(() => { mod.trySend('C_COMPLETE_EXTRA_EVENT', 1, { type: 1 }); }, 500);
     }
 
     function saveJsonData() {
-        fs.writeFileSync(path.join(__dirname, 'data.json'), JSON.stringify(data));
+        fs.writeFileSync(path.join(__dirname, 'data.json'), JSON.stringify(data, null, 4));
     }
 
     function send(msg) { cmd.message(': ' + msg); }
