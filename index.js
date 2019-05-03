@@ -24,16 +24,16 @@ const data_default = {
 module.exports = function AutoVanguard(mod) {
   const cmd = mod.command;
 
-  // config
-  let enable = config.enable;
-  let playerExclusion = data.playerExclusion;
-
   let data;
   try {
     data = require('./_data.json');
   } catch {
     data = data_default;
   }
+
+  // config
+  let enable = config.enable;
+  let playerExclusion = data.playerExclusion;
 
   let hold = false;
   let playerName = '';
