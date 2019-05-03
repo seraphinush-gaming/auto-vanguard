@@ -4,32 +4,51 @@ const fs = require('fs');
 const path = require('path');
 
 const config = require('./config.json');
+const data_default = {
+  battleground: [
+    110,
+    111,
+    112,
+    113,
+    115,
+    116,
+    117,
+    118,
+    119,
+    260,
+    265
+  ],
+  playerExclusion: []
+};
 
 module.exports = function AutoVanguard(mod) {
   const cmd = mod.command;
 
   // config
-  let data = require('./data.json'),
-    enable = config.enable,
-    playerExclusion = data.playerExclusion;
+  let enable = config.enable;
+  let playerExclusion = data.playerExclusion;
 
-  let hold = false,
-    playerName = '',
-    prevState = enable,
-    questId = [],
-    zoneBg = [];
+  let data;
+  try {
+    data = require('./_data.json');
+  } catch {
+    data = data_default;
+  }
+
+  let hold = false;
+  let playerName = '';
+  let questId = [];
+  let zoneBg = [];
 
   // command
   cmd.add('vg', {
     '$none': () => {
       enable = !enable;
-      prevState = enable;
       send(`${enable ? 'En' : 'Dis'}abled`);
     },
     'add': () => {
       playerExclusion.push(playerName);
       data.playerExclusion = playerExclusion;
-      saveJsonData();
       enable = false;
       send(`Added player &lt;${playerName}&gt; to be excluded from auto-vanguard completion.`);
     },
@@ -38,7 +57,6 @@ module.exports = function AutoVanguard(mod) {
         if (playerExclusion[i] === playerName) {
           playerExclusion.splice(i, 1);
           data.playerExclusion = playerExclusion;
-          saveJsonData();
           enable = true;
           send(`Removed player &lt;${playerName}&gt; to be included in auto-vanguard completion.`);
           return;
@@ -50,23 +68,25 @@ module.exports = function AutoVanguard(mod) {
   });
 
   // game state
-  mod.hook('S_LOGIN', 12, (e) => {
+  mod.hook('S_LOGIN', mod.majorPatchVersion >= 81 ? 13 : 12, (e) => {
     playerName = e.name;
-    if (!enable)
-      return;
-    prevState = enable;
-    for (let i = 0, n = playerExclusion.length; i < n; i++) {
-      if (playerExclusion[i] === playerName) {
-        enable = false;
-        break;
+    questId.length = 0;
+
+    if (enable) {
+      for (let i = 0, n = playerExclusion.length; i < n; i++) {
+        if (playerExclusion[i] === playerName) {
+          enable = false;
+          send(`Player &lt;${playerName}&gt; is currently excluded from auto-vanguard completion.`);
+          break;
+        }
       }
     }
   });
 
   mod.hook('S_LOAD_TOPO', 3, (e) => {
-    if (zoneBg.includes(e)) {
+    if (enable && zoneBg.includes(e)) {
       hold = true;
-    } else if (hold && questId.length !== 0) {
+    } else if (enable && hold && questId.length !== 0) {
       completeQuest();
       hold = false;
     }
@@ -77,11 +97,6 @@ module.exports = function AutoVanguard(mod) {
     zoneBg = data.battleground;
     console.log('Unmapped protocol packet \<S_BATTLE_FIELD_ENTRANCE_INFO\>.');
   }
-
-  mod.tryHook('S_EXIT', 'raw', () => {
-    enable = prevState;
-    questId.length = 0;
-  });
 
   // code
   mod.hook('S_COMPLETE_EVENT_MATCHING_QUEST', 1, (e) => {
@@ -105,7 +120,7 @@ module.exports = function AutoVanguard(mod) {
   }
 
   function saveJsonData() {
-    fs.writeFileSync(path.join(__dirname, 'data.json'), JSON.stringify(data, null, 2));
+    fs.writeFileSync(path.join(__dirname, '_data.json'), JSON.stringify(data, null, 2));
   }
 
   function send(msg) { cmd.message(': ' + msg); }
@@ -116,7 +131,6 @@ module.exports = function AutoVanguard(mod) {
       enable: enable,
       hold: hold,
       playerName: playerName,
-      prevState: prevState,
       questId: questId
     };
     return state;
@@ -126,10 +140,12 @@ module.exports = function AutoVanguard(mod) {
     enable = state.enable;
     hold = state.hold;
     playerName = state.playerName;
-    prevState = state.prevState
     questId = state.questId;
   }
 
-  this.destructor = () => { cmd.remove('vg'); }
+  this.destructor = () => {
+    saveJsonData();
+    cmd.remove('vg');
+  }
 
 }
