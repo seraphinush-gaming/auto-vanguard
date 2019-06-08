@@ -51,7 +51,7 @@ module.exports = function AutoVanguard(mod) {
   mod.hook('S_LOAD_TOPO', 3, (e) => {
     if (enable && zoneBg.includes(e.zone)) {
       hold = true;
-    } else if (settings.enable && hold && questId.length !== 0) {
+    } else if (enable && hold && questId.length !== 0) {
       completeQuest();
       hold = false;
     }
