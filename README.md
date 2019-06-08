@@ -23,17 +23,14 @@ Support seraph via paypal donations, thanks in advance !
 - __`rm`__
   - Remove player from character-specific exclusion from auto-vanguard completion
 
-## Config
-- __`enable`__
-  - Initialize module on/off
-  - Default is `true`
-
 ## Info
 - Original author : [baldera-mods](https://github.com/baldera-mods)
 
 ## Changelog
 <details>
 
+    2.04
+    - Added settings-migrator support
     2.03
     - Removed `tera-game-state` usage
     2.02

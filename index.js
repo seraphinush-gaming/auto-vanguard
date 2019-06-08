@@ -1,92 +1,57 @@
 'use strict';
 
-const fs = require('fs');
-const path = require('path');
-
-const config = require('./config.json');
-const data_default = {
-  battleground: [
-    110,
-    111,
-    112,
-    113,
-    115,
-    116,
-    117,
-    118,
-    119,
-    260,
-    265
-  ],
-  playerExclusion: []
-};
-
 module.exports = function AutoVanguard(mod) {
   const cmd = mod.command;
 
-  let data;
-  try {
-    data = require('./_data.json');
-  } catch {
-    data = data_default;
-  }
+  let settings = mod.settings;
 
-  // config
-  let enable = config.enable;
-  let playerExclusion = data.playerExclusion;
-
+  let enable = true;
   let hold = false;
-  let playerName = '';
+  let myName = '';
   let questId = [];
   let zoneBg = [];
 
   // command
   cmd.add('vg', {
     '$none': () => {
-      enable = !enable;
-      send(`${enable ? 'En' : 'Dis'}abled`);
+      settings.enable = !settings.enable;
+      enable = settings.enable;
+      send(`${settings.enable ? 'En' : 'Dis'}abled`);
     },
     'add': () => {
-      playerExclusion.push(playerName);
-      data.playerExclusion = playerExclusion;
+      settings.charExclusion[myName] = true;
       enable = false;
-      send(`Added player &lt;${playerName}&gt; to be excluded from auto-vanguard completion.`);
+      send(`Added player &lt;${myName}&gt; to be excluded from auto-vanguard completion.`);
     },
     'rm': () => {
-      for (let i = 0, n = playerExclusion.length; i < n; i++) {
-        if (playerExclusion[i] === playerName) {
-          playerExclusion.splice(i, 1);
-          data.playerExclusion = playerExclusion;
-          enable = true;
-          send(`Removed player &lt;${playerName}&gt; to be included in auto-vanguard completion.`);
-          return;
-        }
+      if (settings.charExclusion[myName]) {
+        delete settings.charExclusion[myName];
+        enable = true;
+        send(`Removed player &lt;${myName}&gt; to be included in auto-vanguard completion.`);
+      } else {
+        send(`Player &lt;${myName}&gt; has not been excluded from auto-vanguard completion yet.`);
       }
-      send(`Player &lt;${playerName}&gt; has not been excluded from auto-vanguard completion yet.`);
     },
     '$default': () => send(`Invalid argument. usage : vg [add|rm]`)
   });
 
   // game state
   mod.hook('S_LOGIN', mod.majorPatchVersion >= 81 ? 13 : 12, (e) => {
-    playerName = e.name;
+    myName = e.name;
     questId.length = 0;
 
-    if (enable) {
-      for (let i = 0, n = playerExclusion.length; i < n; i++) {
-        if (playerExclusion[i] === playerName) {
-          enable = false;
-          send(`Player &lt;${playerName}&gt; is currently excluded from auto-vanguard completion.`);
-          break;
-        }
+    if (settings.enable) {
+      if (settings.charExclusion[myName]) {
+        enable = false;
+        send(`Player &lt;${myName}&gt; is currently excluded from auto-vanguard completion.`);
       }
     }
   });
 
   mod.hook('S_LOAD_TOPO', 3, (e) => {
-    if (enable && zoneBg.includes(e)) {
+    if (enable && zoneBg.includes(e.zone)) {
       hold = true;
-    } else if (enable && hold && questId.length !== 0) {
+    } else if (settings.enable && hold && questId.length !== 0) {
       completeQuest();
       hold = false;
     }
@@ -94,7 +59,7 @@ module.exports = function AutoVanguard(mod) {
 
   let _ = mod.tryHook('S_BATTLE_FIELD_ENTRANCE_INFO', 1, { order: -1000 }, (e) => zoneBg = [e.zone]);
   if (_ === null) {
-    zoneBg = data.battleground;
+    zoneBg = settings.battleground;
     console.log('Unmapped protocol packet \<S_BATTLE_FIELD_ENTRANCE_INFO\>.');
   }
 
@@ -119,10 +84,6 @@ module.exports = function AutoVanguard(mod) {
     setTimeout(() => { mod.trySend('C_COMPLETE_EXTRA_EVENT', 1, { type: 1 }); }, 500);
   }
 
-  function saveJsonData() {
-    fs.writeFileSync(path.join(__dirname, '_data.json'), JSON.stringify(data, null, 2));
-  }
-
   function send(msg) { cmd.message(': ' + msg); }
 
   // reload
@@ -130,7 +91,7 @@ module.exports = function AutoVanguard(mod) {
     let state = {
       enable: enable,
       hold: hold,
-      playerName: playerName,
+      myName: myName,
       questId: questId
     };
     return state;
@@ -139,12 +100,11 @@ module.exports = function AutoVanguard(mod) {
   this.loadState = (state) => {
     enable = state.enable;
     hold = state.hold;
-    playerName = state.playerName;
+    myName = state.myName;
     questId = state.questId;
   }
 
   this.destructor = () => {
-    saveJsonData();
     cmd.remove('vg');
   }
 
