@@ -60,7 +60,7 @@ module.exports = function AutoVanguard(mod) {
   let _ = mod.tryHook('S_BATTLE_FIELD_ENTRANCE_INFO', 1, { order: -1000 }, (e) => zoneBg = [e.zone]);
   if (_ === null) {
     zoneBg = settings.battleground;
-    console.log('Unmapped protocol packet \<S_BATTLE_FIELD_ENTRANCE_INFO\>.');
+    mod.warn('Unmapped protocol packet \<S_BATTLE_FIELD_ENTRANCE_INFO\>.');
   }
 
   // code
@@ -80,8 +80,8 @@ module.exports = function AutoVanguard(mod) {
       let myId = questId.pop();
       mod.send('C_COMPLETE_DAILY_EVENT', 1, { id: myId });
     }
-    setTimeout(() => { mod.trySend('C_COMPLETE_EXTRA_EVENT', 1, { type: 0 }); }, 500);
-    setTimeout(() => { mod.trySend('C_COMPLETE_EXTRA_EVENT', 1, { type: 1 }); }, 500);
+    mod.setTimeout(() => { mod.trySend('C_COMPLETE_EXTRA_EVENT', 1, { type: 0 }); }, 500);
+    mod.setTimeout(() => { mod.trySend('C_COMPLETE_EXTRA_EVENT', 1, { type: 1 }); }, 500);
   }
 
   function send(msg) { cmd.message(': ' + msg); }
