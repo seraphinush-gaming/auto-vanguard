@@ -2,19 +2,6 @@
 
 const DefaultSettings = {
   "enable": true,
-  "battleground": [
-    110,
-    111,
-    112,
-    113,
-    115,
-    116,
-    117,
-    118,
-    119,
-    260,
-    265
-  ],
   "charExclusion": {}
 };
 

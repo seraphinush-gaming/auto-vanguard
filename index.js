@@ -9,7 +9,6 @@ module.exports = function AutoVanguard(mod) {
   let hold = false;
   let myName = '';
   let questId = [];
-  let zoneBg = [];
 
   // command
   cmd.add('vg', {
@@ -32,11 +31,34 @@ module.exports = function AutoVanguard(mod) {
         send(`Player &lt;${myName}&gt; has not been excluded from auto-vanguard completion yet.`);
       }
     },
-    '$default': () => send(`Invalid argument. usage : vg [add|rm]`)
+    '$default': () => {
+      send(`Invalid argument. usage : vg [add|rm]`);
+    }
   });
 
   // game state
-  mod.hook('S_LOGIN', mod.majorPatchVersion >= 81 ? 13 : 12, (e) => {
+  mod.game.on('enter_game', () => {
+    myName = mod.game.me.name;
+    questId.length = 0;
+
+    if (settings.enable) {
+      if (settings.charExclusion[myName]) {
+        enable = false;
+        send(`Player &lt;${myName}&gt; is currently excluded from auto-vanguard completion.`);
+      }
+    }
+  });
+
+  mod.game.me.on('change_zone', () => {
+    if (enable && mod.game.me.inBattleground) {
+      hold = true;
+    } else if (enable && hold && questId.length !== 0) {
+      completeQuest();
+      hold = false;
+    }
+  });
+
+  /* mod.hook('S_LOGIN', mod.majorPatchVersion >= 81 ? 13 : 12, (e) => {
     myName = e.name;
     questId.length = 0;
 
@@ -55,13 +77,13 @@ module.exports = function AutoVanguard(mod) {
       completeQuest();
       hold = false;
     }
-  });
+  }); */
 
-  let _ = mod.tryHook('S_BATTLE_FIELD_ENTRANCE_INFO', 1, { order: -1000 }, (e) => zoneBg = [e.zone]);
+  /* let _ = mod.tryHook('S_BATTLE_FIELD_ENTRANCE_INFO', 1, { order: -1000 }, (e) => zoneBg = [e.zone]);
   if (_ === null) {
     zoneBg = settings.battleground;
     mod.warn('Unmapped protocol packet \<S_BATTLE_FIELD_ENTRANCE_INFO\>.');
-  }
+  } */
 
   // code
   mod.hook('S_COMPLETE_EVENT_MATCHING_QUEST', 1, (e) => {
@@ -78,7 +100,7 @@ module.exports = function AutoVanguard(mod) {
   function completeQuest() {
     while (questId.length > 0) {
       let myId = questId.pop();
-      mod.send('C_COMPLETE_DAILY_EVENT', 1, { id: myId });
+      mod.trySend('C_COMPLETE_DAILY_EVENT', 1, { id: myId });
     }
     mod.setTimeout(() => { mod.trySend('C_COMPLETE_EXTRA_EVENT', 1, { type: 0 }); }, 500);
     mod.setTimeout(() => { mod.trySend('C_COMPLETE_EXTRA_EVENT', 1, { type: 1 }); }, 500);

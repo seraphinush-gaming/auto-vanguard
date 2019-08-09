@@ -29,6 +29,9 @@ Support seraph via paypal donations, thanks in advance !
 ## Changelog
 <details>
 
+    2.05
+    - Reinstated `tera-game-state`
+    - Removed `S_BATTLE_FIELD_ENTRANCE_INFO` hook
     2.04
     - Added settings-migrator support
     2.03

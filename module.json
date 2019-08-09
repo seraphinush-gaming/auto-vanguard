@@ -1,5 +1,5 @@
 {
-    "author": "seraphinush | baldera-mods",
+    "author": "seraphinush . baldera-mods",
     "conflicts": ["vanguardian"],
     "description": "tera-toolbox module to automatically turn in Vanguard Requests upon completion",
     "disableAutoUpdate": false,
@@ -7,11 +7,11 @@
     "name": "auto-vanguard",
     "options": {
         "reloadable": true,
-        "settingsVersion": 1,
+        "settingsVersion": 2,
         "settingsFile": "config.json",
         "settingsMigrator": "settings.js"
     },
     "servers": ["https://raw.githubusercontent.com/seraphinush-gaming/auto-vanguard/master/"],
     "supportUrl": "https://github.com/seraphinush-gaming/auto-vanguard/blob/master/README.md",
-    "version": "2.04.02"
+    "version": "2.05.00"
 }
