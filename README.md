@@ -19,7 +19,7 @@ Support seraph via paypal donations, thanks in advance !
 
 ### Parameters
 - __`add`__
-  - Add player to character-specific exclusion from auto-vangaurd completion
+  - Add player to character-specific exclusion from auto-vanguard completion
 - __`rm`__
   - Remove player from character-specific exclusion from auto-vanguard completion
 
