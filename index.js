@@ -58,33 +58,6 @@ module.exports = function AutoVanguard(mod) {
     }
   });
 
-  /* mod.hook('S_LOGIN', mod.majorPatchVersion >= 81 ? 13 : 12, (e) => {
-    myName = e.name;
-    questId.length = 0;
-
-    if (settings.enable) {
-      if (settings.charExclusion[myName]) {
-        enable = false;
-        send(`Player &lt;${myName}&gt; is currently excluded from auto-vanguard completion.`);
-      }
-    }
-  });
-
-  mod.hook('S_LOAD_TOPO', 3, (e) => {
-    if (enable && zoneBg.includes(e.zone)) {
-      hold = true;
-    } else if (enable && hold && questId.length !== 0) {
-      completeQuest();
-      hold = false;
-    }
-  }); */
-
-  /* let _ = mod.tryHook('S_BATTLE_FIELD_ENTRANCE_INFO', 1, { order: -1000 }, (e) => zoneBg = [e.zone]);
-  if (_ === null) {
-    zoneBg = settings.battleground;
-    mod.warn('Unmapped protocol packet \<S_BATTLE_FIELD_ENTRANCE_INFO\>.');
-  } */
-
   // code
   mod.hook('S_COMPLETE_EVENT_MATCHING_QUEST', 1, (e) => {
     if (enable) {
