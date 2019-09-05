@@ -19,7 +19,7 @@ class AutoVanguard {
       '$none': () => {
         this.settings.enable = !this.settings.enable;
         this.enable = this.settings.enable;
-        this.send(`${settings.enable ? 'En' : 'Dis'}abled`);
+        this.send(`${this.settings.enable ? 'En' : 'Dis'}abled`);
       },
       'add': () => {
         this.settings.charExclusion[this.name] = true;
