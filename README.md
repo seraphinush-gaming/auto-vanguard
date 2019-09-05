@@ -29,6 +29,8 @@ Support seraph via paypal donations, thanks in advance !
 ## Changelog
 <details>
 
+    3.00
+    - Update module as class export
     2.05
     - Reinstated `tera-game-state`
     - Removed `S_BATTLE_FIELD_ENTRANCE_INFO` hook
