@@ -98,6 +98,8 @@ class AutoVanguard {
     this.mod.setTimeout(() => { this.mod.send('C_COMPLETE_EXTRA_EVENT', 1, { type: 1 }); }, 500);
   }
 
+  send() { this.cmd.message(': ' + [...arguments].join('\n\t - ')); }
+
   // reload
   saveState() {
     let state = {
