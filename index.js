@@ -76,7 +76,7 @@ class AutoVanguard {
 
   destructor() {
     this.cmd.remove('vg');
-    
+
     this.quest_id = undefined;
     this.name = undefined;
     this.hold = undefined;
@@ -111,7 +111,7 @@ class AutoVanguard {
     return state;
   }
 
-  loadState = (state) => {
+  loadState(state) {
     this.enable = state.enable;
     this.hold = state.hold;
     this.name = state.name;
