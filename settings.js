@@ -2,7 +2,7 @@
 
 const DefaultSettings = {
   "enable": true,
-  "charExclusion": {}
+  "exclude": {}
 };
 
 function MigrateSettings(from_ver, to_ver, settings) {
@@ -18,7 +18,9 @@ function MigrateSettings(from_ver, to_ver, settings) {
       return MigrateSettings(from_ver + 1, to_ver, settings);
     }
     switch (to_ver) {
-      //
+      case 3:
+        settings.exclude = settings.charExclusion;
+        delete settings.charExclusion;
     }
 
     return settings;

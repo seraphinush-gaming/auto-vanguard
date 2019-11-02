@@ -1,9 +1,9 @@
 {
 	"files": {
 		"README.md": "1b35093ce167c3fa6855c0927275ff73b2d383f36aafad50cedf292a177a8cff",
-		"index.js": "a4f1a5d2186366c30b2c2349b57960c9c5fcc6db2ab56abf1d12475e77fa65d6",
-		"module.json": "5899cd314aee44da62d61ad328240e442e4dac5421a9b415e2379e6381a1c99f",
-		"settings.js": "85b46225937f8d23bf8d81a241f6dcf6d199c0001be117d78779196c9927fa01"
+		"index.js": "e1290c198d9be12c7efe08339a9cec40931602e1dbd1d0cb0ad5ce51828c4328",
+		"module.json": "b0f38870155cb483505e60486c14d7fbf0e26322edf8c224ca70089a48f759f8",
+		"settings.js": "32d769e5ba2e3402c2797d4d938dfef1c442b395cdae17233cb34a24d5d1e93b"
 	},
 	"defs": {
 		"C_COMPLETE_DAILY_EVENT": 1,

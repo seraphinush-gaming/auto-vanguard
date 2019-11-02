@@ -1,73 +1,69 @@
 'use strict';
 
-class AutoVanguard {
+class auto_vanguard {
 
   constructor(mod) {
 
-    this.mod = mod;
-    this.cmd = mod.command;
-    this.game = mod.game;
-    this.settings = mod.settings;
+    this.m = mod;
+    this.c = mod.command;
+    this.g = mod.game;
+    this.s = mod.settings;
 
-    this.enable = this.settings.enable;
+    this.enable = this.s.enable;
     this.hold = false;
     this.name = '';
-    this.quest_id = [];
+    this.quest = [];
 
     // command
-    this.cmd.add('vg', {
+    this.c.add('vg', {
       '$none': () => {
-        this.settings.enable = !this.settings.enable;
-        this.enable = this.settings.enable;
-        this.send(`${this.settings.enable ? 'En' : 'Dis'}abled`);
+        this.s.enable = this.enable = !this.s.enable;
+        this.send(`${this.s.enable ? 'En' : 'Dis'}abled`);
       },
       'add': () => {
-        this.settings.charExclusion[this.name] = true;
+        this.s.exclude[this.name] = true;
         this.enable = false;
         this.send(`Added player &lt;${this.name}&gt; to be excluded from auto-vanguard completion.`);
       },
       'rm': () => {
-        if (this.settings.charExclusion[this.name]) {
-          delete this.settings.charExclusion[this.name];
+        if (this.s.exclude[this.name]) {
+          delete this.s.exclude[this.name];
+          this.enable = true;
           this.send(`Removed player &lt;${this.name}&gt; to be included in auto-vanguard completion.`);
         } else {
           this.send(`Player &lt;${this.name}&gt; has not been excluded from auto-vanguard completion yet.`);
         }
       },
       '$default': () => {
-        send(`Invalid argument. usage : vg [add|rm]`);
+        this.send(`Invalid argument. usage : vg [add|rm]`);
       }
     });
 
     // game state
-    this.game.on('enter_game', () => {
-      this.name = this.game.me.name;
-      this.quest_id.length = 0;
+    this.g.on('enter_game', () => {
+      this.name = this.g.me.name;
+      this.quest.length = 0;
 
-      if (this.settings.enable) {
-        if (this.settings.charExclusion[this.name]) {
-          this.enable = false;
-          send(`Player &lt;${this.name}&gt; is currently excluded from auto-vanguard completion.`);
-        }
+      if (this.s.enable && this.s.exclude[this.name]) {
+        this.enable = false;
+        this.send(`Player &lt;${this.name}&gt; is currently excluded from auto-vanguard completion.`);
       }
     });
 
-    this.game.me.on('change_zone', () => {
-      if (this.enable && this.game.me.inBattleground) {
+    this.g.me.on('change_zone', () => {
+      if (this.enable && this.g.me.inBattleground) {
         this.hold = true;
-      } else if (this.enable && this.hold && this.quest_id.length !== 0) {
-        this.completeQuest();
+      } else if (this.enable && this.hold && this.quest.length !== 0) {
+        this.complete_quest();
         this.hold = false;
       }
     });
 
     // code
-    this.mod.hook('S_COMPLETE_EVENT_MATCHING_QUEST', 1, (e) => {
+    this.m.hook('S_COMPLETE_EVENT_MATCHING_QUEST', 1, (e) => {
       if (this.enable) {
-        this.quest_id.push(e.id);
-        if (!this.hold) {
-          this.completeQuest();
-        }
+        this.quest.push(e.id);
+        !this.hold ? this.complete_quest() : null;
         return false;
       }
     });
@@ -75,30 +71,20 @@ class AutoVanguard {
   }
 
   destructor() {
-    this.cmd.remove('vg');
-
-    this.quest_id = undefined;
-    this.name = undefined;
-    this.hold = undefined;
-    this.enable = undefined;
-
-    this.settings = undefined;
-    this.game = undefined;
-    this.cmd = undefined;
-    this.mod = undefined;
+    this.c.remove('vg');
   }
 
   // helper
-  completeQuest() {
-    while (this.quest_id.length > 0) {
-      let myId = this.quest_id.pop();
-      this.mod.send('C_COMPLETE_DAILY_EVENT', 1, { id: myId });
+  complete_quest() {
+    while (this.quest.length > 0) {
+      let myId = this.quest.pop();
+      this.m.send('C_COMPLETE_DAILY_EVENT', 1, { id: myId });
     }
-    this.mod.setTimeout(() => { this.mod.send('C_COMPLETE_EXTRA_EVENT', 1, { type: 0 }); }, 500);
-    this.mod.setTimeout(() => { this.mod.send('C_COMPLETE_EXTRA_EVENT', 1, { type: 1 }); }, 500);
+    this.m.setTimeout(() => { this.m.send('C_COMPLETE_EXTRA_EVENT', 1, { type: 0 }); }, 500);
+    this.m.setTimeout(() => { this.m.send('C_COMPLETE_EXTRA_EVENT', 1, { type: 1 }); }, 500);
   }
 
-  send() { this.cmd.message(': ' + [...arguments].join('\n\t - ')); }
+  send() { this.c.message(': ' + [...arguments].join('\n\t - ')); }
 
   // reload
   saveState() {
@@ -106,7 +92,7 @@ class AutoVanguard {
       enable: this.enable,
       hold: this.hold,
       name: this.name,
-      quest_id: this.quest_id
+      quest: this.quest
     };
     return state;
   }
@@ -115,9 +101,9 @@ class AutoVanguard {
     this.enable = state.enable;
     this.hold = state.hold;
     this.name = state.name;
-    this.quest_id = state.quest_id;
+    this.quest = state.quest;
   }
 
 }
 
-module.exports = AutoVanguard;
+module.exports = auto_vanguard;
