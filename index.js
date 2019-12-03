@@ -9,6 +9,7 @@ class auto_vanguard {
     this.g = mod.game;
     this.s = mod.settings;
 
+    // initialize
     this.enable = this.s.enable;
     this.hold = false;
     this.name = '';
