@@ -10,7 +10,6 @@ class auto_vanguard {
     this.s = mod.settings;
 
     // initialize
-    this.enable = this.s.enable;
     this.hold = false;
     this.name = '';
     this.quest = [];
@@ -18,18 +17,18 @@ class auto_vanguard {
     // command
     this.c.add('vg', {
       '$none': () => {
-        this.s.enable = this.enable = !this.s.enable;
+        this.s.enable = !this.s.enable;
         this.send(`${this.s.enable ? 'En' : 'Dis'}abled`);
       },
       'add': () => {
         this.s.exclude[this.name] = true;
-        this.enable = false;
+        this.s.enable = false;
         this.send(`Added player &lt;${this.name}&gt; to be excluded from auto-vanguard completion.`);
       },
       'rm': () => {
         if (this.s.exclude[this.name]) {
           delete this.s.exclude[this.name];
-          this.enable = true;
+          this.s.enable = true;
           this.send(`Removed player &lt;${this.name}&gt; to be included in auto-vanguard completion.`);
         } else {
           this.send(`Player &lt;${this.name}&gt; has not been excluded from auto-vanguard completion yet.`);
@@ -45,16 +44,16 @@ class auto_vanguard {
       this.name = this.g.me.name;
       this.quest.length = 0;
 
-      if (this.s.enable && this.s.exclude[this.name]) {
-        this.enable = false;
+      if (this.s.exclude[this.name]) {
         this.send(`Player &lt;${this.name}&gt; is currently excluded from auto-vanguard completion.`);
       }
     });
 
     this.g.me.on('change_zone', () => {
-      if (this.enable && this.g.me.inBattleground) {
+      if (this.s.enable && this.g.me.inBattleground) {
         this.hold = true;
-      } else if (this.enable && this.hold && this.quest.length !== 0) {
+      }
+      else if (this.s.enable && this.hold && this.quest.length !== 0) {
         this.complete_quest();
         this.hold = false;
       }
@@ -62,7 +61,7 @@ class auto_vanguard {
 
     // code
     this.m.hook('S_COMPLETE_EVENT_MATCHING_QUEST', 1, (e) => {
-      if (this.enable) {
+      if (this.s.enable) {
         this.quest.push(e.id);
         !this.hold ? this.complete_quest() : null;
         return false;
@@ -77,6 +76,9 @@ class auto_vanguard {
 
   // helper
   complete_quest() {
+    if (this.s.exclude[this.name])
+      return;
+
     while (this.quest.length > 0) {
       let myId = this.quest.pop();
       this.m.send('C_COMPLETE_DAILY_EVENT', 1, { id: myId });
@@ -85,12 +87,11 @@ class auto_vanguard {
     this.m.setTimeout(() => { this.m.send('C_COMPLETE_EXTRA_EVENT', 1, { type: 1 }); }, 500);
   }
 
-  send() { this.c.message(': ' + [...arguments].join('\n\t - ')); }
+  send() { this.c.message(': ' + [...arguments].join('\n - ')); }
 
   // reload
   saveState() {
     let state = {
-      enable: this.enable,
       hold: this.hold,
       name: this.name,
       quest: this.quest
@@ -99,7 +100,6 @@ class auto_vanguard {
   }
 
   loadState(state) {
-    this.enable = state.enable;
     this.hold = state.hold;
     this.name = state.name;
     this.quest = state.quest;
