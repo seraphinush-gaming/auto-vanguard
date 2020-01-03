@@ -22,13 +22,11 @@ class auto_vanguard {
       },
       'add': () => {
         this.s.exclude[this.name] = true;
-        this.s.enable = false;
         this.send(`Added player &lt;${this.name}&gt; to be excluded from auto-vanguard completion.`);
       },
       'rm': () => {
         if (this.s.exclude[this.name]) {
           delete this.s.exclude[this.name];
-          this.s.enable = true;
           this.send(`Removed player &lt;${this.name}&gt; to be included in auto-vanguard completion.`);
         } else {
           this.send(`Player &lt;${this.name}&gt; has not been excluded from auto-vanguard completion yet.`);
