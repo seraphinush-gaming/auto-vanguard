@@ -11,7 +11,6 @@ class auto_vanguard {
 
     // initialize
     this.hold = false;
-    this.name = '';
     this.quest = [];
 
     // command
@@ -21,29 +20,26 @@ class auto_vanguard {
         this.send(`${this.s.enable ? 'En' : 'Dis'}abled`);
       },
       'add': () => {
-        this.s.exclude[this.name] = true;
-        this.send(`Added player &lt;${this.name}&gt; to be excluded from auto-vanguard completion.`);
+        this.s.exclude[this.g.me.name] = true;
+        this.send(`Added player &lt;${this.g.me.name}&gt; to be excluded from auto-vanguard completion.`);
       },
       'rm': () => {
-        if (this.s.exclude[this.name]) {
-          delete this.s.exclude[this.name];
-          this.send(`Removed player &lt;${this.name}&gt; to be included in auto-vanguard completion.`);
+        if (this.s.exclude[this.g.me.name]) {
+          delete this.s.exclude[this.g.me.name];
+          this.send(`Removed player &lt;${this.g.me.name}&gt; to be included in auto-vanguard completion.`);
         } else {
-          this.send(`Player &lt;${this.name}&gt; has not been excluded from auto-vanguard completion yet.`);
+          this.send(`Player &lt;${this.g.me.name}&gt; has not been excluded from auto-vanguard completion yet.`);
         }
       },
-      '$default': () => {
-        this.send(`Invalid argument. usage : vg [add|rm]`);
-      }
+      '$default': () => { this.send(`Invalid argument. usage : vg [add|rm]`); }
     });
 
     // game state
     this.g.on('enter_game', () => {
-      this.name = this.g.me.name;
       this.quest.length = 0;
 
-      if (this.s.exclude[this.name]) {
-        this.send(`Player &lt;${this.name}&gt; is currently excluded from auto-vanguard completion.`);
+      if (this.s.exclude[this.g.me.name]) {
+        this.send(`Player &lt;${this.g.me.name}&gt; is currently excluded from auto-vanguard completion.`);
       }
     });
 
@@ -52,8 +48,8 @@ class auto_vanguard {
         this.hold = true;
       }
       else if (this.s.enable && this.hold && this.quest.length !== 0) {
-        this.complete_quest();
         this.hold = false;
+        this.complete_quest();
       }
     });
 
@@ -74,7 +70,7 @@ class auto_vanguard {
 
   // helper
   complete_quest() {
-    if (this.s.exclude[this.name])
+    if (this.s.exclude[this.g.me.name])
       return;
 
     while (this.quest.length > 0) {
@@ -91,7 +87,6 @@ class auto_vanguard {
   saveState() {
     let state = {
       hold: this.hold,
-      name: this.name,
       quest: this.quest
     };
     return state;
@@ -99,7 +94,6 @@ class auto_vanguard {
 
   loadState(state) {
     this.hold = state.hold;
-    this.name = state.name;
     this.quest = state.quest;
   }
 
