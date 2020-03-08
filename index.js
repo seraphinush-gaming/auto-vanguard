@@ -10,7 +10,6 @@ class auto_vanguard {
     this.s = mod.settings;
 
     // initialize
-    this.hold = false;
     this.quest = [];
 
     // command
@@ -44,12 +43,8 @@ class auto_vanguard {
     });
 
     this.g.me.on('change_zone', () => {
-      if (this.s.enable && this.g.me.inBattleground) {
-        this.hold = true;
-      }
-      else if (this.s.enable && this.hold && this.quest.length !== 0) {
-        this.hold = false;
-        this.complete_quest();
+      if (this.s.enable && !this.g.me.inBattleground) {
+        this.quest.length !== 0 ? this.complete_quest() : null;
       }
     });
 
@@ -57,16 +52,14 @@ class auto_vanguard {
     this.m.hook('S_COMPLETE_EVENT_MATCHING_QUEST', 1, (e) => {
       if (this.s.enable) {
         this.quest.push(e.id);
-        !this.hold ? this.complete_quest() : null;
+        !this.g.me.inBattleground ? this.complete_quest() : null;
         return false;
       }
     });
 
   }
 
-  destructor() {
-    this.c.remove('vg');
-  }
+  destructor() { this.c.remove('vg'); }
 
   // helper
   complete_quest() {
@@ -84,18 +77,9 @@ class auto_vanguard {
   send() { this.c.message(': ' + [...arguments].join('\n - ')); }
 
   // reload
-  saveState() {
-    let state = {
-      hold: this.hold,
-      quest: this.quest
-    };
-    return state;
-  }
+  saveState() { return this.quest; }
 
-  loadState(state) {
-    this.hold = state.hold;
-    this.quest = state.quest;
-  }
+  loadState(state) { this.quest = state; }
 
 }
 
