@@ -1,13 +1,8 @@
 {
-	"files": {
-		"README.md": "1b35093ce167c3fa6855c0927275ff73b2d383f36aafad50cedf292a177a8cff",
-		"index.js": "98824a9d50a105a41eccd88dd2184c9b711ccb8371ab8aa9a9b88d0c0cc6e9c9",
-		"module.json": "68140785a29ac878e52dab082135e0496f48202dedfdf4e23292b8700c48f81f",
-		"settings.js": "32d769e5ba2e3402c2797d4d938dfef1c442b395cdae17233cb34a24d5d1e93b"
-	},
-	"defs": {
-		"C_COMPLETE_DAILY_EVENT": 1,
-		"C_COMPLETE_EXTRA_EVENT": 1,
-		"S_COMPLETE_EVENT_MATCHING_QUEST": 1
-	}
+  "files": {
+    "README.md": "e9fdddbf0bd63731ce44efadce2bf929f3f8c18e70d7de51ed745aa54433dce2",
+    "index.js": "98824a9d50a105a41eccd88dd2184c9b711ccb8371ab8aa9a9b88d0c0cc6e9c9",
+    "module.json": "0cd450e07aff6494fd9677f53d86634de3b42f0f88f3007b60bec495e872f7de",
+    "settings.js": "32d769e5ba2e3402c2797d4d938dfef1c442b395cdae17233cb34a24d5d1e93b"
+  }
 }

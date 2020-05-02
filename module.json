@@ -1,17 +1,17 @@
 {
-    "author": "seraphinush . baldera-mods",
-    "conflicts": ["vanguardian"],
-    "description": "tera-toolbox module to automatically turn in Vanguard Requests upon completion",
-    "disableAutoUpdate": false,
-    "donationUrl": "https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=B7QQJZV9L5P2J&source=url",
-    "name": "auto-vanguard",
-    "options": {
-        "reloadable": true,
-        "settingsVersion": 3,
-        "settingsFile": "config.json",
-        "settingsMigrator": "settings.js"
-    },
-    "servers": ["https://raw.githubusercontent.com/seraphinush-gaming/auto-vanguard/master/"],
-    "supportUrl": "https://github.com/seraphinush-gaming/auto-vanguard/blob/master/README.md",
-    "version": "3.00.0b"
+  "author": "seraphinush . baldera-mods",
+  "conflicts": ["vanguardian"],
+  "description": "tera-toolbox module to automatically turn in Vanguard Requests upon completion",
+  "disableAutoUpdate": false,
+  "donationUrl": "https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=B7QQJZV9L5P2J&source=url",
+  "name": "auto-vanguard",
+  "options": {
+    "reloadable": true,
+    "settingsVersion": 3,
+    "settingsFile": "config.json",
+    "settingsMigrator": "settings.js"
+  },
+  "servers": ["https://raw.githubusercontent.com/seraphinush-gaming/auto-vanguard/master/"],
+  "supportUrl": "https://github.com/seraphinush-gaming/auto-vanguard/blob/master/README.md",
+  "version": "3.00.0c"
 }

@@ -1,5 +1,5 @@
 <p align="center">
-<a href="#">
+<a href="https://discord.gg/dUNDDtw">
 <img src="https://github.com/seraphinush-gaming/pastebin/blob/master/logo_ttb_trans.png?raw=true" width="200" height="200" alt="tera-toolbox, logo by Foglio" />
 </a>
 </p>
