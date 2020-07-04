@@ -25,9 +25,8 @@ class auto_vanguard {
         if (mod.settings.exclude[mod.game.me.name]) {
           delete mod.settings.exclude[mod.game.me.name];
           this.send(`Removed player &lt;${mod.game.me.name}&gt; to be included in auto-vanguard completion.`);
-        } else {
-          this.send(`Player &lt;${mod.game.me.name}&gt; has not been excluded from auto-vanguard completion yet.`);
         }
+        else { this.send(`Player &lt;${mod.game.me.name}&gt; has not been excluded from auto-vanguard completion yet.`); }
       },
       '$default': () => { this.send(`Invalid argument. usage : vg [add|rm]`); }
     });
