@@ -8,7 +8,7 @@
 Support seraph via paypal donations, thanks in advance !
 ```
 
-# auto-vanguard [![](https://img.shields.io/badge/paypal-donate-333333.svg?colorA=253B80&colorB=333333)](https://www.paypal.me/seraphinush)
+# auto-vanguard [![](https://img.shields.io/badge/paypal-donate-333333.svg?colorA=0070BA&colorB=333333)](https://www.paypal.me/seraphinush)
 tera-toolbox module to automatically turn in Vanguard Requests upon completion
 
 ## Auto-update guide
