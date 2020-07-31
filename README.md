@@ -4,11 +4,12 @@
 </a>
 </p>
 
-# auto-vanguard [![paypal.me](https://img.shields.io/badge/paypal.me-donate-333333.svg?colorA=253B80&colorB=333333)](https://www.paypal.me/seraphinush)
-tera-toolbox module to automatically turn in Vanguard Requests upon completion
 ```
 Support seraph via paypal donations, thanks in advance !
 ```
+
+# auto-vanguard [![](https://img.shields.io/badge/paypal-donate-333333.svg?colorA=253B80&colorB=333333)](https://www.paypal.me/seraphinush)
+tera-toolbox module to automatically turn in Vanguard Requests upon completion
 
 ## Auto-update guide
 - Create a folder called `auto-vanguard` in `tera-toolbox/mods` and download >> [`module.json`](https://raw.githubusercontent.com/seraphinush-gaming/auto-vanguard/master/module.json) << (right-click this link and save link as..) into the folder

@@ -61,6 +61,7 @@ class auto_vanguard {
   destructor() {
     this.command.remove('vg');
     this.mod.unhook(this.hook);
+    this.hook = null;
   }
 
   // helper
@@ -82,4 +83,4 @@ class auto_vanguard {
 
 }
 
-module.exports = auto_vanguard;
+module.exports = { NetworkMod: auto_vanguard };
