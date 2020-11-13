@@ -14,9 +14,9 @@ tera-toolbox module to automatically turn in Vanguard Requests upon completion
 
 ### Parameters
 - __`add`__
-  - Add player to character-specific exclusion from auto-vanguard completion
+  - Add player to character-specific exclusion from auto-Vanguard Request completion
 - __`rm`__
-  - Remove player from character-specific exclusion from auto-vanguard completion
+  - Remove player from character-specific exclusion from auto-Vanguard Request completion
 
 ## Info
 - Original author : [baldera-mods](https://github.com/baldera-mods)
