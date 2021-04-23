@@ -22,11 +22,11 @@ class auto_vanguard {
         this.send(`Added player &lt;${mod.game.me.name}&gt; to be excluded from auto-vanguard completion.`);
       },
       'rm': () => {
-        if (mod.settings.exclude[mod.game.me.name]) {
-          delete mod.settings.exclude[mod.game.me.name];
-          this.send(`Removed player &lt;${mod.game.me.name}&gt; to be included in auto-vanguard completion.`);
-        }
-        else { this.send(`Player &lt;${mod.game.me.name}&gt; has not been excluded from auto-vanguard completion yet.`); }
+        if (!mod.settings.exclude[mod.game.me.name])
+          return this.send(`Player &lt;${mod.game.me.name}&gt; has not been excluded from auto-vanguard completion yet.`);
+
+        delete mod.settings.exclude[mod.game.me.name];
+        this.send(`Removed player &lt;${mod.game.me.name}&gt; to be included in auto-vanguard completion.`);
       },
       '$default': () => { this.send(`Invalid argument. usage : vg [add|rm]`); }
     });

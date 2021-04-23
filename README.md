@@ -1,5 +1,5 @@
 ```
-Support seraph via paypal donations, thanks in advance !
+Support seraph via donations, thanks in advance !
 ```
 
 # auto-vanguard [![](https://img.shields.io/badge/paypal-donate-333333.svg?colorA=0070BA&colorB=333333)](https://www.paypal.me/seraphinush) [![](https://img.shields.io/badge/patreon-pledge-333333.svg?colorA=F96854&colorB=333333)](https://www.patreon.com/seraphinush)
@@ -9,13 +9,13 @@ tera-toolbox module to automatically turn in Vanguard Requests upon completion
 - Create a folder called `auto-vanguard` in `tera-toolbox/mods` and download >> [`module.json`](https://raw.githubusercontent.com/seraphinush-gaming/auto-vanguard/master/module.json) << (right-click this link and save link as..) into the folder
 
 ## Usage
-- __`vg`__
+- `vg`
   - Toggle on/off
 
 ### Parameters
-- __`add`__
+- `add`
   - Add player to character-specific exclusion from auto-Vanguard Request completion
-- __`rm`__
+- `rm`
   - Remove player from character-specific exclusion from auto-Vanguard Request completion
 
 ## Info
