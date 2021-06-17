@@ -1,7 +1,7 @@
 'use strict';
 
 const DefaultSettings = {
-  "enable": true,
+  "enabled": true,
   "exclude": {}
 };
 
@@ -21,6 +21,11 @@ function MigrateSettings(from_ver, to_ver, settings) {
       case 3:
         settings.exclude = settings.charExclusion;
         delete settings.charExclusion;
+        break;
+      case 4:
+        settings.enabled = settings.enable;
+        delete settings.enable;
+        break;
     }
 
     return settings;

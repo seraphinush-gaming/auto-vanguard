@@ -1,6 +1,6 @@
 'use strict';
 
-class auto_vanguard {
+class AutoVanguard {
 
   constructor(mod) {
 
@@ -14,8 +14,8 @@ class auto_vanguard {
     // command
     mod.command.add('vg', {
       '$none': () => {
-        mod.settings.enable = !mod.settings.enable;
-        this.send(`${mod.settings.enable ? 'En' : 'Dis'}abled`);
+        mod.settings.enabled = !mod.settings.enabled;
+        this.send(`${mod.settings.enabled ? 'En' : 'Dis'}abled`);
       },
       'add': () => {
         mod.settings.exclude[mod.game.me.name] = true;
@@ -40,18 +40,18 @@ class auto_vanguard {
     });
 
     mod.game.me.on('change_zone', () => {
-      if (mod.settings.enable && !mod.game.me.inBattleground)
-        this.quest.length !== 0 ? this.complete_quest() : null;
+      if (mod.settings.enabled && !mod.game.me.inBattleground)
+        if (this.quest.length !== 0) this.complete_quest();
     });
 
     // code
     this.hook = mod.hook('S_COMPLETE_EVENT_MATCHING_QUEST', 1, (e) => {
-      if (mod.settings.enable) {
+      if (mod.settings.enabled) {
         if (this.mod.settings.exclude[this.mod.game.me.name])
           return;
 
         this.quest.push(e.id);
-        !mod.game.me.inBattleground ? this.complete_quest() : null;
+        if (!mod.game.me.inBattleground) this.complete_quest();
         return false;
       }
     });
@@ -83,4 +83,4 @@ class auto_vanguard {
 
 }
 
-module.exports = { NetworkMod: auto_vanguard };
+module.exports = { NetworkMod: AutoVanguard };

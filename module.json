@@ -7,11 +7,11 @@
   "name": "auto-vanguard",
   "options": {
     "reloadable": true,
-    "settingsVersion": 3,
+    "settingsVersion": 4,
     "settingsFile": "config.json",
     "settingsMigrator": "settings.js"
   },
   "servers": ["https://raw.githubusercontent.com/seraphinush-gaming/auto-vanguard/master/"],
   "supportUrl": "https://github.com/seraphinush-gaming/auto-vanguard/blob/master/README.md",
-  "version": "3.00.15.v105.02"
+  "version": "3.00.16.v106.02"
 }
