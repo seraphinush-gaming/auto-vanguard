@@ -47,8 +47,7 @@ class AutoVanguard {
     // code
     this.hook = mod.hook('S_COMPLETE_EVENT_MATCHING_QUEST', 1, (e) => {
       if (mod.settings.enabled) {
-        if (this.mod.settings.exclude[this.mod.game.me.name])
-          return;
+        if (this.mod.settings.exclude[this.mod.game.me.name]) return;
 
         this.quest.push(e.id);
         if (!mod.game.me.inBattleground) this.complete_quest();
@@ -61,7 +60,10 @@ class AutoVanguard {
   destructor() {
     this.command.remove('vg');
     this.mod.unhook(this.hook);
-    this.hook = null;
+
+    this.hook = undefined;
+    this.command = undefined;
+    this.mod = undefined;
   }
 
   // helper
